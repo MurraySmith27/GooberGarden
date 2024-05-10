@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://db034tx2q00f"]
+
+[ext_resource type="PackedScene" uid="uid://cnow47m2le1hs" path="res://scenes/SubScenes/gardener.tscn" id="1_4qfuk"]
+[ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="1_4tu60"]
+[ext_resource type="Script" path="res://scripts/PlayerAnimation.gd" id="2_rdjuq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3j6ud"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_4tu60")
+rotation_speed = 100.0
+
+[node name="PlayerAnimation" type="Node" parent="."]
+script = ExtResource("2_rdjuq")
+
+[node name="Pivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Gardener" parent="Pivot" instance=ExtResource("1_4qfuk")]
+move_speed = 14.0
+acceleration = 5.0
+rotation_speed = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_3j6ud")

@@ -1,0 +1,97 @@
+[gd_scene load_steps=12 format=3 uid="uid://cnow47m2le1hs"]
+
+[ext_resource type="PackedScene" uid="uid://bgfvpf2nxm7xv" path="res://meshes/Gardener.glb" id="1_3vrso"]
+[ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="2_iwk4p"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7qodk"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_80gym"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_nwne4"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8ko54"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_aytuu"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id="AnimationNodeBlendSpace2D_ns4ob"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_7qodk")
+blend_point_0/pos = Vector2(0, 0)
+blend_point_1/node = SubResource("AnimationNodeAnimation_80gym")
+blend_point_1/pos = Vector2(0, 1)
+blend_point_2/node = SubResource("AnimationNodeAnimation_nwne4")
+blend_point_2/pos = Vector2(1, 0)
+blend_point_3/node = SubResource("AnimationNodeAnimation_8ko54")
+blend_point_3/pos = Vector2(0, -1)
+blend_point_4/node = SubResource("AnimationNodeAnimation_aytuu")
+blend_point_4/pos = Vector2(-1, 0)
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_x10if"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_7r3yd"]
+states/IdleToRun/node = SubResource("AnimationNodeBlendSpace2D_ns4ob")
+states/IdleToRun/position = Vector2(469, 106)
+transitions = ["Start", "IdleToRun", SubResource("AnimationNodeStateMachineTransition_x10if")]
+graph_offset = Vector2(62, -29)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3j6ud"]
+
+[node name="Gardener" instance=ExtResource("1_3vrso")]
+script = ExtResource("2_iwk4p")
+move_speed = null
+acceleration = null
+rotation_speed = null
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(0.245, 0, 0, 0, 0.245, 0, 0, 0, 0.245, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+bones/0/position = Vector3(-0.0780249, 2.48115, -0.15179)
+bones/1/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(0.0029483, 0.000875986, -0.0999297, 0.99499)
+bones/4/rotation = Quaternion(-6.31784e-08, 3.82835e-08, 0.0273995, 0.999625)
+bones/5/position = Vector3(-0.0525981, 0.770691, -0.632807)
+bones/5/rotation = Quaternion(-0.716526, -0.0439197, -0.023045, 0.695795)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(-0.245728, -0.00827506, 0.0466489, 0.96818)
+bones/7/rotation = Quaternion(-0.486307, -0.0120918, -0.0206962, 0.873459)
+bones/7/scale = Vector3(1, 1, 1)
+bones/9/position = Vector3(-0.0525676, 0.770697, 0.755593)
+bones/9/rotation = Quaternion(0.023045, 0.695795, 0.716526, -0.0439198)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(-0.245728, 0.00827501, -0.0466489, 0.96818)
+bones/11/rotation = Quaternion(-0.486307, 0.0120918, 0.0206962, 0.873459)
+bones/11/scale = Vector3(1, 1, 1)
+bones/13/position = Vector3(0.502641, 2.25387, -0.13332)
+bones/13/rotation = Quaternion(0.65737, 0.298127, 0.641228, 0.260407)
+bones/14/rotation = Quaternion(-0.0412093, 0.0184797, 0.666907, 0.743771)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.0259052, 0.00745249, -0.882881, 0.468822)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(-0.705815, 2.25387, -0.13332)
+bones/16/rotation = Quaternion(0.65737, -0.298127, -0.641228, 0.260407)
+bones/17/rotation = Quaternion(-0.0412093, -0.0184797, -0.666907, 0.743771)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(0.0259054, -0.00745254, 0.882881, 0.468822)
+bones/18/scale = Vector3(1, 1, 1)
+
+[node name="AnimationPlayer" parent="." index="1"]
+speed_scale = 6.0
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="2"]
+tree_root = SubResource("AnimationNodeStateMachine_7r3yd")
+anim_player = NodePath("../AnimationPlayer")
+parameters/IdleToRun/blend_position = Vector2(0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_3j6ud")
+
+[node name="Camera3D" type="Camera3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4, 3)
