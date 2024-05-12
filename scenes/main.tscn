@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://imdl8x8nq2ak"]
+[gd_scene load_steps=14 format=3 uid="uid://imdl8x8nq2ak"]
 
 [ext_resource type="Shader" path="res://materials/shaders/world_bending.gdshader" id="1_k8073"]
 [ext_resource type="PackedScene" uid="uid://cnow47m2le1hs" path="res://scenes/SubScenes/gardener.tscn" id="2_du1g2"]
 [ext_resource type="PackedScene" uid="uid://bn4cu4n5kbrvs" path="res://scenes/SubScenes/goober.tscn" id="2_ul3am"]
+[ext_resource type="AudioStream" uid="uid://c7hxfgyqlh211" path="res://audio/GooberGardenSongLoop.wav" id="4_ota0e"]
+[ext_resource type="Script" path="res://scenes/MusicController.gd" id="5_mvhlv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_shg04"]
 size = Vector3(500, 2, 500)
@@ -87,3 +89,7 @@ libraries = {
 "": SubResource("AnimationLibrary_6obtk")
 }
 autoplay = "gooby"
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ota0e")
+script = ExtResource("5_mvhlv")
