@@ -18,14 +18,19 @@ func _physics_process(delta):
 	if dir != Vector3.ZERO:
 		dir = dir.normalized()
 		var scale = $Armature.scale
-		$Armature.basis = Basis.looking_at(Vector3(dir.x,0,dir.z))
-		$Armature.rotation = lerp($Armature.rotation, Vector3(dir.x, 0, dir.z), rotation_speed * delta)
+		#$Armature.basis = Basis.looking_at(Vector3(dir.x,0,dir.z))
+		var current_angle = Vector3(0,0,1).signed_angle_to($Armature.get_global_transform().basis.z, Vector3(0,1,0))
+		var angle = Vector3(0,0,1).signed_angle_to(Vector3(-dir.x, 0, -dir.z), Vector3(0, 1, 0))
+		var lerped_angle = lerp_angle(current_angle, angle, rotation_speed * delta);
+		
+		$Armature.rotation = Vector3(0, lerped_angle, 0)
 		$Armature.scale = scale
 		
 	velocity = lerp(velocity, dir * move_speed, acceleration * delta)
 	
 	var vl = velocity * $Armature.transform.basis
-	$AnimationTree.set("parameters/IdleToRun/blend_position", Vector2(vl.x, -vl.z).normalized())
+	$AnimationTree.set("parameters/IdleToRun/IdleOrRun/blend_amount", min(Vector2(vl.x, -vl.z).length(), 1))
+	
 	
 	if not is_on_floor():
 		velocity.y = velocity.y - (fall_acceleration * delta)

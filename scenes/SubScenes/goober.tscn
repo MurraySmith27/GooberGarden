@@ -1,0 +1,104 @@
+[gd_scene load_steps=17 format=3 uid="uid://bn4cu4n5kbrvs"]
+
+[ext_resource type="PackedScene" uid="uid://hsrdrsiwe51v" path="res://meshes/Goober.glb" id="1_rykmg"]
+[ext_resource type="Script" path="res://scenes/SubScenes/GooberMovement.gd" id="2_xw4sy"]
+[ext_resource type="Shader" path="res://materials/shaders/world_bending.gdshader" id="3_opsy7"]
+
+[sub_resource type="Gradient" id="Gradient_oyqnm"]
+colors = PackedColorArray(0, 0, 1, 1, 1, 0.494118, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rehaw"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5xdm5"]
+color_ramp = SubResource("Gradient_oyqnm")
+noise = SubResource("FastNoiseLite_rehaw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_utq1p"]
+render_priority = 0
+shader = ExtResource("3_opsy7")
+shader_parameter/albedo_texture = SubResource("NoiseTexture2D_5xdm5")
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_skymt"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7xwvs"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_a3wyy"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ub1b4"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_7h5f8"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_mnkbk"]
+graph_offset = Vector2(-149.033, 3.8737)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_7xwvs")
+nodes/Animation/position = Vector2(140, 60)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_skymt")
+"nodes/Animation 2/position" = Vector2(140, 200)
+nodes/IdleToWalk/node = SubResource("AnimationNodeBlend2_a3wyy")
+nodes/IdleToWalk/position = Vector2(533.5, 173.8)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_7h5f8")
+nodes/TimeScale/position = Vector2(320, 80)
+"nodes/TimeScale 2/node" = SubResource("AnimationNodeTimeScale_ub1b4")
+"nodes/TimeScale 2/position" = Vector2(380.6, 248.6)
+nodes/output/position = Vector2(720, 140)
+node_connections = [&"IdleToWalk", 0, &"TimeScale", &"IdleToWalk", 1, &"TimeScale 2", &"TimeScale", 0, &"Animation", &"TimeScale 2", 0, &"Animation 2", &"output", 0, &"IdleToWalk"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_t2iq5"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_6apda"]
+states/IdleToWalk/node = SubResource("AnimationNodeBlendTree_mnkbk")
+states/IdleToWalk/position = Vector2(505, 100)
+transitions = ["Start", "IdleToWalk", SubResource("AnimationNodeStateMachineTransition_t2iq5")]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_u4j25"]
+
+[node name="Goober" instance=ExtResource("1_rykmg")]
+script = ExtResource("2_xw4sy")
+rotation_speed = 6
+
+[node name="Armature" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.177438, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-0.095978, 0.00104764, 0.0108645, 0.995324)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/scale = Vector3(0.961471, 0.961471, 0.961471)
+bones/3/position = Vector3(1.22536e-09, 0.300076, -0.844539)
+bones/3/rotation = Quaternion(0.975174, 5.04685e-09, -3.21216e-08, -0.221438)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-7.32733e-08, 0.300076, 0.843283)
+bones/4/rotation = Quaternion(-2.1525e-08, 0.221438, 0.975174, 1.67181e-08)
+bones/4/scale = Vector3(1, 1, 0.999999)
+bones/5/rotation = Quaternion(-0.707107, 0, 0, 0.707107)
+
+[node name="Cone" parent="Armature/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="NurbsCurve" parent="Armature/Skeleton3D" index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="Sphere" parent="Armature/Skeleton3D" index="2"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="Sphere_001" parent="Armature/Skeleton3D" index="3"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="Sphere_002" parent="Armature/Skeleton3D" index="4"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="Sphere_003" parent="Armature/Skeleton3D" index="5"]
+surface_material_override/0 = SubResource("ShaderMaterial_utq1p")
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+tree_root = SubResource("AnimationNodeStateMachine_6apda")
+anim_player = NodePath("../AnimationPlayer")
+parameters/IdleToWalk/IdleToWalk/blend_amount = 0.0
+parameters/IdleToWalk/TimeScale/scale = 1.0
+"parameters/IdleToWalk/TimeScale 2/scale" = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." index="4"]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+shape = SubResource("SphereShape3D_u4j25")

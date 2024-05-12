@@ -17,9 +17,6 @@ script = ExtResource("2_rdjuq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="Gardener" parent="Pivot" instance=ExtResource("1_4qfuk")]
-move_speed = 14.0
-acceleration = 5.0
-rotation_speed = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

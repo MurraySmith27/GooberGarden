@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://vrpqdme0pgnr"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ooa0"]
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.131244, 0.134706, 0.127782, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DialogBox" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DialogBoxRoot" type="Panel" parent="."]
+layout_mode = 2
+offset_top = 459.0
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_vertical = 10
+
+[node name="SpeakerText" type="Label" parent="DialogBoxRoot"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 43.0
+grow_horizontal = 2
+
+[node name="Panel" type="Panel" parent="DialogBoxRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6ooa0")
+
+[node name="DialogText" type="Label" parent="DialogBoxRoot/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 52.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
