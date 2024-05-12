@@ -24,21 +24,6 @@ subdivide_width = 100
 subdivide_height = 100
 subdivide_depth = 100
 
-[sub_resource type="Animation" id="Animation_bqbih"]
-resource_name = "gooby"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Ground/MeshInstance3D:mesh:material:shader_parameter/albedo_texture:width")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [512, 1024]
-}
-
 [sub_resource type="Animation" id="Animation_14ime"]
 length = 0.001
 tracks/0/type = "value"
@@ -52,6 +37,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [512]
+}
+
+[sub_resource type="Animation" id="Animation_bqbih"]
+resource_name = "gooby"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Ground/MeshInstance3D:mesh:material:shader_parameter/albedo_texture:width")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [512, 1024]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6obtk"]
@@ -78,6 +78,9 @@ shadow_enabled = true
 
 [node name="Gardener" parent="." instance=ExtResource("2_du1g2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.99)
+move_speed = null
+acceleration = null
+goober_interact_radius = null
 
 [node name="Goober" parent="." instance=ExtResource("2_ul3am")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, 0)

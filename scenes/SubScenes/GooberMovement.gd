@@ -12,6 +12,9 @@ var random = RandomNumberGenerator.new()
 
 var was_walking = false
 
+var is_talking_to_player = false
+var current_player_position = Vector3.ZERO;
+
 func _ready():
 	random.randomize()
 
@@ -38,6 +41,12 @@ func _physics_process(delta):
 		
 	$AnimationTree.set("parameters/IdleToWalk/IdleToWalk/blend_amount", min(velocity.length(), 1))
 	
+	if is_talking_to_player:
+		var dir = current_player_position - position;
+		var current_angle = Vector3(0,0,1).signed_angle_to($Armature.get_global_transform().basis.z, Vector3(0,1,0))
+		var angle = Vector3(0,0,1).signed_angle_to(Vector3(-dir.x, 0, -dir.z), Vector3(0, 1, 0))
+		var lerped_angle = lerp_angle(current_angle, angle, rotation_speed * delta);
+		
 	
 func wander():
 	var rotate_time = random.randi_range(1, 3)
@@ -66,3 +75,13 @@ func wander():
 		is_rotating_left = false
 		
 	is_wandering = false
+	
+func start_dialog(player_position):
+	is_wandering = false;
+	$AnimationTree.set("parameters/IdleToWalk/IdleToWalk/blend_amount", 0)
+	
+	is_talking_to_player = true;
+	current_player_position = position
+	
+	
+	
