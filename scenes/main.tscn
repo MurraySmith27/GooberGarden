@@ -78,9 +78,6 @@ shadow_enabled = true
 
 [node name="Gardener" parent="." instance=ExtResource("2_du1g2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 10.99)
-move_speed = null
-acceleration = null
-goober_interact_radius = null
 
 [node name="Goober" parent="." instance=ExtResource("2_ul3am")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 2, 0)

@@ -19,13 +19,14 @@ func _physics_process(delta):
 	
 	if !interacting:
 		if Input.is_action_just_pressed("interact"):
+			print("staring dialogue")
 			#check if there are any nearby goobers
 			var goobers = get_tree().get_nodes_in_group("Goober");
 			for goober in goobers:
 				if goober.position.distance_to(position) < goober_interact_radius:
 					#interact with this goober
-					current_interacting_goober = goober;
 					interacting = true;
+					current_interacting_goober = goober;
 					var callback = Callable(self, "dialog_finished");
 					var goober_state = goober.get_node("GooberState")
 					$DialogBox.display_dialog_list(goober_state.get_dialog(), goober_state.get_goober_name(), callback);
@@ -47,7 +48,6 @@ func _physics_process(delta):
 			var lerped_angle = lerp_angle(current_angle, angle, rotation_speed * delta);
 			
 			$Armature.rotation = Vector3(0, lerped_angle, 0)
-			$Armature.scale = scale
 			
 		velocity = lerp(velocity, dir * move_speed, acceleration * delta)
 		
@@ -60,7 +60,8 @@ func _physics_process(delta):
 		move_and_slide()	
 
 func dialog_finished():
+	print("ending dialogue")
 	interacting = false;
-	current_winteracting_goober.stop_dialog();
+	current_interacting_goober.stop_dialog();
 	current_interacting_goober = null;
 	
