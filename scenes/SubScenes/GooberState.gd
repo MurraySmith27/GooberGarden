@@ -1,5 +1,9 @@
 extends Node
 
+static var goober_id_generator = 0;
+
+var goober_id;
+
 var dialog_dict;
 var goober_name;
 
@@ -11,6 +15,9 @@ func _ready():
 	dialog_dict = JSON.parse_string(json_as_text)
 
 	goober_name = generate_name();
+	
+	goober_id = goober_id_generator;
+	goober_id_generator = goober_id_generator + 1;
 
 func generate_name():
 	var prefix_options = ["BLA", "GO", "PRE"];
