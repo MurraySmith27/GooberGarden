@@ -93,6 +93,7 @@ autoplay = "gooby"
 
 [node name="Music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_ota0e")
+volume_db = -15.0
 script = ExtResource("5_mvhlv")
 
 [node name="ItemSpawner" type="Node" parent="."]

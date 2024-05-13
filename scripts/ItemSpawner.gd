@@ -1,6 +1,6 @@
 extends Node
 
-@export var noise_threshold = 0.9f;
+@export var noise_threshold = 0.9;
 
 func ready():
 	var texture = NoiseTexture2D.new()
